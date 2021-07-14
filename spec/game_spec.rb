@@ -2,9 +2,10 @@ require 'game'
 
 describe Game do
 
-  let(:bob) { double :bob }
-  let(:rob) { double :rob }
+  let(:rob) { double :rob, hit_points: 10 }
   let(:game) { described_class.new('Bob', 'Rob') }
+  let(:dead_player) { double :dead_player, hit_points: 0 }
+  let(:finished_game) {described_class.new(dead_player, rob)}
 
   describe '#initialize' do
     it 'puts player 1 and 2 in an array' do
@@ -44,6 +45,18 @@ describe Game do
   describe '#other_player' do
     it 'returns player other than current player' do
       expect(game.other_player('Bob')).to eq 'Rob'
+    end
+  end
+
+  describe '#game_over' do
+    it 'returns true if players hit points are less than 0' do
+      expect(finished_game.game_over?).to eq true
+    end
+  end
+
+  describe '#loser' do
+    it 'returns the loser' do
+      expect(finished_game.loser).to eq dead_player
     end
   end
 end

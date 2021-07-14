@@ -30,7 +30,7 @@ class Battle < Sinatra::Base
     @game = $game
     @game.attack(@game.other_player(@game.current_turn))
     @game.switch_turns
-    erb :attack
+    @game.current_turn.hit_points == 0 ? (erb :lose) : (erb :attack)
   end
 
   run! if app_file == $0
