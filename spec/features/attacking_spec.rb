@@ -7,7 +7,20 @@ feature 'Attacking players' do
   scenario 'Attack and player 2 points reduce' do
     sign_in_and_play
     click_link('Attack')
-    click_link('OK')
     expect(page).to have_content 'Rob: 50HP'
+  end
+  scenario 'Switching turns attacking' do
+    sign_in_and_play
+    click_link('Attack')
+    click_link('OK')
+    click_link('Attack')
+    expect(page).to have_content 'Rob attacked Bob'
+  end
+  scenario 'Shows player 1 points reduction' do
+    sign_in_and_play
+    click_link('Attack')
+    click_link('OK')
+    click_link('Attack')
+    expect(page).to have_content 'Bob: 50HP'
   end
 end
